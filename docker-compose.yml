@@ -1,0 +1,16 @@
+services:
+  backend:
+    build: .
+    ports:
+      - "8001:8000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: mysql+pymysql://root:password@db:3306/expense_db
+
+  db:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: expense_db

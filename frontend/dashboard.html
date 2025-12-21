@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Expense System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+  <nav class="bg-white shadow-sm border-b px-6 py-4 flex justify-between items-center">
+    <h1 class="text-4xl font-bold text-gray-800">ExpensePortal</h1>
+    <button onclick="logout()" class="text-3xl font-medium text-red-600 hover:text-red-800 transition-colors">Logout</button>
+  </nav>
+
+  <main class="max-w-5xl mx-auto p-6 space-y-6">
+    
+    <div id="employee-actions" style="display:none;" class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+      <h3 class="text-3xl font-semibold text-gray-800 mb-4 border-b pb-2">Submit New Expense</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <input id="category" placeholder="Category (e.g. Travel)" class="border p-2 rounded-md focus:ring-2 focus:ring-blue-400 outline-none" />
+        <input id="amount" type="number" placeholder="Amount" class="border p-2 rounded-md focus:ring-2 focus:ring-blue-400 outline-none" />
+        <input id="date" type="date" class="border p-2 rounded-md focus:ring-2 focus:ring-blue-400 outline-none" />
+      </div>
+      <button onclick="addExpense()" class="mt-4 bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium transition-all">Submit Expense</button>
+    </div>
+
+    <div id="manager-actions" style="display:none;" class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+      <h3 class="text-2xl font-semibold text-gray-800 mb-4 border-b pb-2">Manager Approval Queue</h3>
+      <div class="flex gap-4 mb-6">
+        <input id="expenseIdManager" placeholder="Enter Expense ID" class="flex-1 border p-2 rounded-md focus:ring-2 focus:ring-blue-400 outline-none" />
+        <button onclick="approveExpense('MANAGER')" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">Approve</button>
+        <button onclick="rejectExpense('MANAGER')" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300">Reject</button>
+      </div>
+      
+      <div class="flex gap-2 border-t pt-4">
+        <button onclick="getTeamSummary()" class="text-sm bg-indigo-50 text-indigo-700 px-4 py-2 rounded-full hover:bg-indigo-100 font-medium">Team Summary</button>
+        <button onclick="getMonthlyTrend()" class="text-sm bg-indigo-50 text-indigo-700 px-4 py-2 rounded-full hover:bg-indigo-100 font-medium">Monthly Trend</button>
+      </div>
+    </div>
+
+    <div id="admin-actions" style="display:none;" class="space-y-6">
+      <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">Admin Global Approvals</h3>
+        <div class="flex gap-4">
+          <input id="expenseIdAdmin" placeholder="Expense ID" class="flex-1 border p-2 rounded-md outline-none" />
+          <button onclick="approveExpense('ADMIN')" class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700">Final Approval</button>
+        </div>
+      </div>
+
+      <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+        <h4 class="text-lg font-semibold text-gray-800 mb-4">Policy Management</h4>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+          <input id="policyCategory" placeholder="Category" class="border p-2 rounded-md" />
+          <input id="maxAmount" type="number" placeholder="Max Amount" class="border p-2 rounded-md" />
+          <input id="maxClaims" type="number" placeholder="Max Claims" class="border p-2 rounded-md" />
+          <select id="timeWindow" class="border p-2 rounded-md bg-white">
+            <option value="DAY">DAY</option>
+            <option value="WEEK">WEEK</option>
+            <option value="MONTH">MONTH</option>
+          </select>
+        </div>
+        <button onclick="createPolicy()" class="bg-black text-white px-6 py-2 rounded-lg hover:bg-gray-800 transition-all">Create Policy</button>
+        <button onclick="getViolationRate()" class="ml-4 text-blue-600 underline">View Violation Rate</button>
+      </div>
+    </div>
+
+    <div class="mt-8">
+      <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 text-center">Server Response</h4>
+      <pre id="output" class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto min-h-[100px] border border-gray-700 shadow-inner">Waiting for action...</pre>
+    </div>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
